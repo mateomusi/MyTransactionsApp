@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Transaction from "./Transaction";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 
 const Folder = ({
   carpetas,
@@ -77,12 +79,16 @@ const Folder = ({
 
   return (
     <div className="folder" style={{ backgroundColor: carpeta.color }}>
-      <span className="nombrecarpeta">{carpeta.nombre}</span>
+      <div className="encabezado">
+        <span className="nombrecarpeta">{carpeta.nombre}</span>
 
-      {!mostrarCampoNombre && carpetas && carpetas.length > 0 && (
-        <button onClick={handleMostrarCampoNombre}>Agregar Carpeta</button>
-      )}
-
+        {!mostrarCampoNombre && carpetas && carpetas.length > 0 && (
+          <button onClick={handleMostrarCampoNombre}>Agregar Carpeta</button>
+        )}
+        <button className="eliminar" onClick={handleEliminarCarpeta}>
+          <FontAwesomeIcon icon={faX} size="lg" style={{ color: "#000000" }} />
+        </button>
+      </div>
       <div>
         {/* Formulario para agregar una nueva transacción */}
         <input
@@ -95,6 +101,7 @@ const Folder = ({
           }
         />
         <input
+          className="monto"
           type="number"
           name="monto"
           placeholder="Monto"
@@ -146,9 +153,6 @@ const Folder = ({
           }}
         />
       ))}
-      <button className="eliminar" onClick={handleEliminarCarpeta}>
-        Eliminar Carpeta
-      </button>
     </div>
   );
 };

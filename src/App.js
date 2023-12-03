@@ -67,10 +67,7 @@ const App = () => {
 
     const updateCarpetas = [...state.carpetas, nuevaCarpeta];
 
-    setState((prevState) => ({
-      ...prevState,
-      carpetas: updateCarpetas,
-    }));
+    setState({ carpetas: updateCarpetas });
 
     localStorage.setItem(
       "transactionsData",
@@ -82,40 +79,45 @@ const App = () => {
   };
 
   const eliminarCarpeta = (carpetaId) => {
-    const nuevasCarpetas = state.carpetas.filter(
-      (carpeta) => carpeta.id !== carpetaId
+    const confirmarBorrado = window.confirm(
+      "¿Estás seguro de eliminar esta carpeta?"
     );
-
-    setState((prevState) => ({
-      ...prevState,
-      carpetas: nuevasCarpetas,
-    }));
-
-    // Actualizamos el almacenamiento local después de eliminar la carpeta
-    localStorage.setItem(
-      "transactionsData",
-      JSON.stringify({ carpetas: nuevasCarpetas })
-    );
+    if (confirmarBorrado) {
+      const nuevasCarpetas = state.carpetas.filter(
+        (carpeta) => carpeta.id !== carpetaId
+      );
+      setState({ carpetas: nuevasCarpetas });
+      localStorage.setItem(
+        "transactionsData",
+        JSON.stringify({ carpetas: nuevasCarpetas })
+      );
+    }
   };
 
   const eliminarTransaccion = (transaccionId) => {
-    const nuevasCarpetas = state.carpetas.map((carpeta) => ({
-      ...carpeta,
-      transacciones: carpeta.transacciones.filter(
-        (transaccion) => transaccion.id !== transaccionId
-      ),
-    }));
-
-    setState((prevState) => ({
-      ...prevState,
-      carpetas: nuevasCarpetas,
-    }));
-
-    // Actualizamos el almacenamiento local después de eliminar la transacción
-    localStorage.setItem(
-      "transactionsData",
-      JSON.stringify({ carpetas: nuevasCarpetas })
+    const confirmarBorrado = window.confirm(
+      "¿Estás seguro de eliminar esta transacción?"
     );
+
+    if (confirmarBorrado) {
+      const nuevasCarpetas = state.carpetas.map((carpeta) => ({
+        ...carpeta,
+        transacciones: carpeta.transacciones.filter(
+          (transaccion) => transaccion.id !== transaccionId
+        ),
+      }));
+
+      setState((prevState) => ({
+        ...prevState,
+        carpetas: nuevasCarpetas,
+      }));
+
+      // Actualizamos el almacenamiento local después de eliminar la transacción
+      localStorage.setItem(
+        "transactionsData",
+        JSON.stringify({ carpetas: nuevasCarpetas })
+      );
+    }
   };
 
   const agregarTransaccion = (carpetaId, transaccion) => {
@@ -171,7 +173,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Mi App de Transacciones</h1>
+      <h1>MyTransactions</h1>
       <div className="btn-agregar-carpetas">
         {mostrarInput ? (
           <div>
@@ -187,7 +189,6 @@ const App = () => {
           <button onClick={agregarCarpeta}>Agregar Carpeta</button>
         )}
       </div>
-      {/* Renderizar carpetas */}
       <div className="carpetas">
         {state.carpetas.map((carpeta) => (
           <Folder
@@ -196,12 +197,9 @@ const App = () => {
             eliminarCarpeta={eliminarCarpeta}
             agregarTransaccion={agregarTransaccion}
             eliminarTransaccion={eliminarTransaccion}
-            // Puedes pasar más propiedades si es necesario
           />
         ))}
-        {/* Renderizar transacciones sin carpeta */}
       </div>
-      {/* Botón para agregar una nueva carpeta */}
     </div>
   );
 };

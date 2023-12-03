@@ -1,4 +1,6 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 
 const Transaction = ({
   transaccion,
@@ -28,8 +30,12 @@ const Transaction = ({
               ? transaccion.descripcion
               : "Sin descripción"}
           </p>
-          <button onClick={handleEliminarTransaccion}>
-            Eliminar Transacción
+          <button className="rmBtn" onClick={handleEliminarTransaccion}>
+            <FontAwesomeIcon
+              icon={faMinus}
+              size="lg"
+              style={{ color: "#fff" }}
+            />
           </button>
         </>
       )}
