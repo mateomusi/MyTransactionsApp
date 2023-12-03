@@ -1,3 +1,6 @@
+* {
+  font-family: "Poppins";
+}
 /* Estilos para el contenedor de la carpeta */
 .folder {
   margin: 20px;
@@ -120,4 +123,40 @@ body {
 .rmBtn {
   width: fit-content;
   align-self: center;
+}
+.sign-in-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  height: fit-content;
+  width: 35%;
+  margin: 0 auto;
+  margin-top: 50px;
+  background-color: rgb(250, 224, 189);
+}
+.sign-in-container-form {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  margin: 15px;
+}
+.sign-in-container-box {
+  width: 410px;
+}
+.sign-in-container form input {
+  margin: 10px 0;
+  border-radius: 5px;
+  padding: 5px;
+  border: none;
+}
+.authDtl {
+  text-align: center;
+}
+.btn-lg-sg {
+  width: 88%;
 }

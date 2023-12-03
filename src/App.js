@@ -1,11 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Folder from "./components/Folder";
 import Transaction from "./components/Transaction";
+import SignIn from "./components/auth/SignIn";
+import SignUp from "./components/auth/SignUp";
+import AuthDetails from "./components/AuthDetails";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
+import LogoutButton from "./components/auth/LogOut";
 
 const App = () => {
+  const [user, setUser] = useState(null);
   const [state, setState] = useState({ carpetas: [] });
   const [nombreCarpeta, setNombreCarpeta] = useState("");
   const [mostrarInput, setMostrarInput] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [showSignIn, setShowSignIn] = useState(true);
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("transactionsData"));
@@ -171,9 +190,40 @@ const App = () => {
     });
   };
 
+  const handleSignUpClick = () => {
+    setShowSignIn(false);
+  };
+
+  const handleSignInClick = () => {
+    setShowSignIn(true);
+  };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!user) {
+    return (
+      <div className="sign-in-container">
+        <h1>MyTransactions</h1>
+        <div>
+          {showSignIn ? <SignIn /> : <SignUp />}
+          <button
+            className="btn-lg-sg"
+            onClick={showSignIn ? handleSignUpClick : handleSignInClick}
+          >
+            {showSignIn ? "Sign Up" : "Sign In"}
+          </button>
+        </div>
+        <AuthDetails />
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <h1>MyTransactions</h1>
+      <LogoutButton />
       <div className="btn-agregar-carpetas">
         {mostrarInput ? (
           <div>
