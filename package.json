@@ -24,10 +24,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts-rewired start",
-    "build": "react-scripts-rewired build",
-    "test": "react-scripts-rewired test",
-    "eject": "react-scripts-rewired eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
